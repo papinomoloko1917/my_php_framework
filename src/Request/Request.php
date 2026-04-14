@@ -23,4 +23,10 @@ final class Request {
             path: $path,
         );
     }
+    public function path() {
+        return $this->path;
+    }
+    public function method() {
+        return $this->method;
+    }
 }
