@@ -23,5 +23,6 @@ class Dispatcher {
             $controller = new $classController();
             return (string) $controller->$methodController();
         }
+        throw new RuntimeException("Некорректный обработчик маршрута");
     }
 }
