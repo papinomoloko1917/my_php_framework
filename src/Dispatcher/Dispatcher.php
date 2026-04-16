@@ -8,12 +8,10 @@ use App\Routing\Route;
 use RuntimeException;
 
 class Dispatcher {
-    public function __construct() {
-    }
-    public function dispatch(Route $targetRoute): mixed {
+    public function dispatch(Route $targetRoute): string {
         $handler = $targetRoute->handler();
         if (is_callable($handler)) {
-            return $handler();
+            return (string) $handler();
         } else if (count($handler) == 2) {
             [$classController, $methodController] = $handler;
             if (!class_exists($classController)) {
@@ -23,7 +21,7 @@ class Dispatcher {
                 throw new RuntimeException("Данный метод контроллера - {$methodController}, не найден");
             }
             $controller = new $classController();
-            return $controller->$methodController();
+            return (string) $controller->$methodController();
         }
     }
 }

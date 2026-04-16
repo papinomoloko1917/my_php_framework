@@ -10,7 +10,7 @@ class Route {
     public function __construct(
         private readonly string $path,
         private readonly string $method,
-        private readonly mixed $handler,
+        private readonly Closure|array $handler,
     ) {
     }
     public static function get(string $path, $handler): self {
@@ -25,7 +25,7 @@ class Route {
     public function method(): string {
         return $this->method;
     }
-    public function handler(): array|Closure {
+    public function handler(): Closure|array {
         return $this->handler;
     }
 }

@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace App;
 
-use App\Dispatcher\Dispatcher;
-use App\Routing\Router;
+use App\Container\Container;
 use Throwable;
 
 class App {
     public function __construct(
-        private readonly Router $router,
-        private readonly Dispatcher $dispatcher
+        private readonly Container $container
     ) {
     }
     public function run(): void {
         try {
-            $targetRoute = $this->router->resolve();
-            echo $this->dispatcher->dispatch($targetRoute);
+            $targetRoute = $this->container
+                ->router()
+                ->resolve();
+            echo $this->container
+                ->dispatcher()
+                ->dispatch($targetRoute);
         } catch (Throwable $e) {
             echo $e->getMessage();
         }
