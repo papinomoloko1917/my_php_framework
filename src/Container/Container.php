@@ -9,19 +9,19 @@ use App\Request\Request;
 use App\Routing\Router;
 
 final class Container {
-    private readonly ?Router $router;
-    private readonly ?Dispatcher $dispatcher;
-    public function __construct(
-        private readonly Request $request,
-        private readonly array $routes
-    ) {
+    public readonly Request $request;
+    public readonly Router $router;
+    public readonly Dispatcher $dispatcher;
+    public function __construct() {
+        $this->registerServices();
     }
-    public function dispatcher(): Dispatcher {
+    private function registerServices(): void {
+        $this->request = Request::createFromGlobals();
+
+        $routes = require BASE_DIR . '/routes/web.php';
+
+        $this->router = new Router($this->request->path(), $this->request->method(), $routes);
+
         $this->dispatcher = new Dispatcher();
-        return $this->dispatcher;
-    }
-    public function router(): Router {
-        $this->router = new Router($this->request, $this->routes);
-        return $this->router;
     }
 }

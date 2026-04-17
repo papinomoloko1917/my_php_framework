@@ -8,17 +8,17 @@ use App\Container\Container;
 use Throwable;
 
 class App {
-    public function __construct(
-        private readonly Container $container
-    ) {
+    private Container $container;
+    public function __construct() {
+        $this->container = new Container();
     }
     public function run(): void {
         try {
             $targetRoute = $this->container
-                ->router()
+                ->router
                 ->resolve();
             echo $this->container
-                ->dispatcher()
+                ->dispatcher
                 ->dispatch($targetRoute);
         } catch (Throwable $e) {
             echo $e->getMessage();

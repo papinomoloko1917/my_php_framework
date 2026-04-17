@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace App\Routing;
 
-use App\Request\Request;
 use RuntimeException;
 
 class Router {
     public function __construct(
-        private readonly Request $request,
+        private readonly string $path,
+        private readonly string $method,
         private readonly array $routes,
     ) {
     }
     public function resolve(): Route {
         foreach ($this->routes as $route) {
-            if ($route->path() === $this->request->path()) {
-                if ($route->method() === $this->request->method()) {
+            if ($route->path() === $this->path) {
+                if ($route->method() === $this->method) {
                     return $route;
                 } else {
                     http_response_code(405);
