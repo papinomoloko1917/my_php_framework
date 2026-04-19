@@ -17,7 +17,7 @@ class App {
             $targetRoute = $this->container
                 ->router
                 ->resolve();
-            echo $this->container
+            $this->container
                 ->dispatcher
                 ->dispatch($targetRoute);
         } catch (Throwable $e) {
