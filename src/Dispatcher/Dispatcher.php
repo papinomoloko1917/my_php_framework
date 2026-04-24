@@ -26,8 +26,7 @@ class Dispatcher {
             if (!method_exists($classController, $methodController)) {
                 throw new RuntimeException("Данный метод контроллера - {$methodController}, не найден");
             }
-            $controller = new $classController();
-            $controller->setView($this->view);
+            $controller = new $classController($this->view);
 
             return $controller->$methodController();
         }
