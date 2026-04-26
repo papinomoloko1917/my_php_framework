@@ -9,11 +9,9 @@ use App\View\View;
 use RuntimeException;
 
 class Dispatcher {
-    public function __construct(
-        private readonly View $view
-    ) {
+    public function __construct() {
     }
-    public function dispatch(Route $targetRoute): mixed {
+    public function dispatch(Route $targetRoute, View $view): string {
 
         $handler = $targetRoute->handler();
         if (is_callable($handler)) {
@@ -26,9 +24,9 @@ class Dispatcher {
             if (!method_exists($classController, $methodController)) {
                 throw new RuntimeException("Данный метод контроллера - {$methodController}, не найден");
             }
-            $controller = new $classController($this->view);
+            $targetController = new $classController($view);
 
-            return $controller->$methodController();
+            return $targetController->$methodController();
         }
         throw new RuntimeException("Некорректный обработчик маршрута");
     }

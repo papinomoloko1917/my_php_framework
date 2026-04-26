@@ -11,7 +11,7 @@ abstract class Controller {
         private readonly View $view
     ) {
     }
-    public function view(string $name): void {
-        $this->view->page($name);
+    public function view(string $name): string {
+        return $this->view->page($name);
     }
 }

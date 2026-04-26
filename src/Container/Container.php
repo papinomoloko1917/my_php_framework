@@ -14,6 +14,7 @@ final class Container {
     public readonly Router $router;
     public readonly Dispatcher $dispatcher;
     public readonly View $view;
+
     public function __construct() {
         $this->registerServices();
     }
@@ -30,6 +31,6 @@ final class Container {
 
         $this->view = new View();
 
-        $this->dispatcher = new Dispatcher($this->view);
+        $this->dispatcher = new Dispatcher();
     }
 }

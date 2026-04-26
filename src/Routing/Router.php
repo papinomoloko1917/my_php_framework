@@ -19,12 +19,10 @@ class Router {
                 if ($route->method() === $this->method) {
                     return $route;
                 } else {
-                    http_response_code(405);
-                    throw new RuntimeException('405 | Метод не действителен');
+                    throw new RuntimeException('405 | Метод не действителен', 405);
                 }
             }
         }
-        http_response_code(404);
-        throw new RuntimeException('404 | Страница не найдена');
+        throw new RuntimeException('404 | Страница не найдена', 404);
     }
 }
