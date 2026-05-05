@@ -8,7 +8,12 @@ class View {
     public function page(string $name): string {
         ob_start();
         require BASE_DIR . "/public/views/pages/$name.php";
-        $html = ob_get_clean();
-        return $html;
+        $content = ob_get_clean();
+
+        ob_start();
+        require BASE_DIR . "/public/views/layouts/app.php";
+        $layout = ob_get_clean();
+
+        return $layout;
     }
 }
