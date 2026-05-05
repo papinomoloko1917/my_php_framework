@@ -23,6 +23,7 @@ class App {
                 ->dispatch(
                     $targetRoute,
                     $this->container->view,
+                    $this->container->request,
                 );
             $response = Response::html($content);
         } catch (Throwable $e) {

@@ -9,6 +9,7 @@ class Request {
         private string $uri,
         private string $method,
         private string $path,
+        private array $post,
     ) {
     }
     public static function createFromGlobals(): self {
@@ -21,10 +22,13 @@ class Request {
         $rawPath = rtrim($rawPath, '/');
         $path = $rawPath ?: '/';
 
+        $post = $_POST ?? [];
+
         return new self(
             uri: $uri,
             method: $method,
             path: $path,
+            post: $post,
         );
     }
     public function uri(): string {
@@ -35,5 +39,11 @@ class Request {
     }
     public function path(): string {
         return $this->path;
+    }
+    public function input(string $name): ?string {
+        if (isset($this->post[$name])) {
+            return $this->post[$name];
+        }
+        return null;
     }
 }

@@ -1,7 +1,7 @@
 <form action="/register" method="POST">
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Электронный адрес</label>
-        <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+        <input name="email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
         <div id="emailHelp" class="form-text">Мы никогда не передадим вашу электронную почту кому-либо еще</div>
     </div>
     <div class="mb-3">
