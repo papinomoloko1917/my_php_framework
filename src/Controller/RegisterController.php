@@ -9,30 +9,36 @@ class RegisterController extends Controller {
         return $this->view->page('register');
     }
     public function register(): ?string {
-        $rawEmail = $this->request->input('email');
-        $rawPassword = $this->request->input('password');
-        $email = htmlspecialchars(trim($rawEmail), ENT_QUOTES, 'UTF-8');
-        $password = password_hash($rawPassword, PASSWORD_DEFAULT);
+        $rawEmail = $this->request->input('email') ?? '';
+        $rawEmail = trim($rawEmail);
+        $rawPassword = $this->request->input('password') ?? '';
+        $passwordConfirmation = $this->request->input('password_confirmation') ?? '';
+        $email = null;
+        $password = null;
         $error = [];
-        if (!empty($rawEmail)) {
-            if (filter_var($rawEmail, FILTER_VALIDATE_EMAIL)) {
-                return $email;
-            } else {
-                $error[] = 'Некорректный формат Email';
-            }
-        } else {
+
+        if (empty($rawEmail)) {
             $error[] = 'Email не может быть пустым';
+        } elseif (!filter_var($rawEmail, FILTER_VALIDATE_EMAIL)) {
+            $error[] = 'Некорректный формат Email';
         }
 
-        if (!empty($rawPassword)) {
-            if (!strlen($rawPassword) < 6) {
-                return $password;
-            } else {
-                $error[] = 'Количество символов в пароле должно быть больше 6';
-            }
-        } else {
+        if (empty($rawPassword)) {
             $error[] = 'Пароль не может быть пустым';
+        } elseif (strlen($rawPassword) < 6) {
+            $error[] = 'Количество символов в пароле должно быть больше 5';
         }
-        return implode('<br>', $error);
+        if (empty($passwordConfirmation)) {
+            $error[] = 'Подтверждение пароля не может быть пустым';
+        } elseif ($rawPassword !== $passwordConfirmation) {
+            $error[] = 'Пароли не совпадают';
+        }
+
+        if ($error) {
+            return implode('<br>', $error);
+        }
+        $email = $rawEmail;
+        $password = password_hash($rawPassword, PASSWORD_DEFAULT);
+        return "Привет пользователь {$email}!";
     }
 }
