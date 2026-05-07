@@ -6,6 +6,6 @@ namespace App\Controller;
 
 class AboutController extends Controller {
     public function index(): string {
-        return $this->view->page('about');
+        return $this->view('about');
     }
 }

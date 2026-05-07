@@ -6,6 +6,6 @@ namespace App\Controller;
 
 class HomeController extends Controller {
     public function index(): string {
-        return $this->view->page('home');
+        return $this->view('home');
     }
 }

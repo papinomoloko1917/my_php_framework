@@ -6,7 +6,7 @@ namespace App\Controller;
 
 class RegisterController extends Controller {
     public function showForm(): string {
-        return $this->view->page('register');
+        return $this->view('register');
     }
     public function register(): ?string {
         $rawEmail = $this->request->input('email') ?? '';
@@ -37,8 +37,10 @@ class RegisterController extends Controller {
         if ($error) {
             return implode('<br>', $error);
         }
+
         $email = $rawEmail;
         $password = password_hash($rawPassword, PASSWORD_DEFAULT);
+        $pdo = $this->database->pdo();
         return "Привет пользователь {$email}!";
     }
 }

@@ -24,6 +24,7 @@ class App {
                     $targetRoute,
                     $this->container->view,
                     $this->container->request,
+                    $this->container->database,
                 );
             $response = Response::html($content);
         } catch (Throwable $e) {

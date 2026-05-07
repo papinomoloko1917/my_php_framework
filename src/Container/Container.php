@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Container;
 
+use App\Database\Database;
 use App\Dispatcher\Dispatcher;
 use App\Request\Request;
 use App\Routing\Router;
@@ -14,6 +15,7 @@ class Container {
     public readonly Router $router;
     public readonly Dispatcher $dispatcher;
     public readonly View $view;
+    public readonly Database $database;
 
     public function __construct() {
         $this->registerServices();
@@ -30,5 +32,7 @@ class Container {
         );
         $this->dispatcher = new Dispatcher();
         $this->view = new View();
+
+        $this->database = new Database();
     }
 }
