@@ -25,6 +25,7 @@ class App {
                     $this->container->view,
                     $this->container->request,
                     $this->container->database,
+                    $this->container->registerValidator,
                 );
             $response = Response::html($content);
         } catch (Throwable $e) {
