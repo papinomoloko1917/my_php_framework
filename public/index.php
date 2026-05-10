@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+session_start();
+
 define('BASE_DIR', dirname(__DIR__));
 
 require_once BASE_DIR . '/bootstrap/bootstrap.php';

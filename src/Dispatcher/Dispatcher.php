@@ -6,6 +6,7 @@ namespace App\Dispatcher;
 
 use App\Database\Database;
 use App\Request\Request;
+use App\Response\Response;
 use App\Routing\Route;
 use App\Validation\RegisterValidator;
 use App\View\View;
@@ -18,7 +19,7 @@ class Dispatcher {
         Request $request,
         Database $database,
         RegisterValidator $registerValidator,
-    ): string {
+    ): string|Response {
         if ($route->handler() instanceof Closure) {
             return $route->handler()();
         } else {

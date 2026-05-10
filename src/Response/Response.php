@@ -22,4 +22,7 @@ class Response {
     public static function html(string $body, int $statusCode = 200): self {
         return new self($body, $statusCode, ['Content-Type' => 'text/html; charset=UTF-8']);
     }
+    public static function redirect(string $path): self {
+        return new self('', 302, ['Location' => $path,]);
+    }
 }

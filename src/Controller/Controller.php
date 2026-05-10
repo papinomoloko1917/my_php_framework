@@ -15,7 +15,7 @@ abstract class Controller {
         protected readonly Database $database,
     ) {
     }
-    public function view(string $name): string {
-        return $this->view->page($name);
+    public function view(string $name, array $data = []): string {
+        return $this->view->page($name, $data);
     }
 }

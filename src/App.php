@@ -27,7 +27,11 @@ class App {
                     $this->container->database,
                     $this->container->registerValidator,
                 );
-            $response = Response::html($content);
+            if ($content instanceof Response) {
+                $response = $content;
+            } else {
+                $response = Response::html($content);
+            }
         } catch (Throwable $e) {
             if ($e->getCode() >= 100 && $e->getCode() <= 599) {
                 $response = Response::html($e->getMessage(), $e->getCode());

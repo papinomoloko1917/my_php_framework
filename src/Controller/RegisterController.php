@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use App\Database\Database;
 use App\Request\Request;
+use App\Response\Response;
+use App\Session\Flash;
 use App\Validation\RegisterValidator;
 use App\View\View;
 
@@ -21,7 +23,7 @@ class RegisterController extends Controller {
     public function showForm(): string {
         return $this->view('register');
     }
-    public function register(): string {
+    public function register(): string|Response {
         $rawEmail = $this->request->input('email') ?? '';
         $rawEmail = trim($rawEmail);
         $rawPassword = $this->request->input('password') ?? '';
@@ -30,7 +32,7 @@ class RegisterController extends Controller {
         $errors = $this->registerValidator->validate($rawEmail, $rawPassword, $passwordConfirmation);
 
         if ($errors) {
-            return implode('<br>', $errors);
+            return $this->view('register', ['errors' => $errors, 'email' => $rawEmail]);
         }
 
         $email = $rawEmail;
@@ -51,12 +53,11 @@ class RegisterController extends Controller {
                 ':email' => $email,
                 ':password' => $password,
             ]);
-            $safeEmail = htmlspecialchars($email, ENT_QUOTES, 'UTF-8');
 
-            return "Привет пользователь {$safeEmail}!";
+            Flash::set('success', 'Регистрация прошла успешно');
+            return Response::redirect('/');
         }
-        if ($user) {
-            return 'Пользователь уже существует';
-        }
+        $errors[] = 'Пользователь уже существует';
+        return $this->view('register', ['errors' => $errors, 'email' => $rawEmail]);
     }
 }
