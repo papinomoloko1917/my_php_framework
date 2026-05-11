@@ -26,6 +26,7 @@ class App {
                     $this->container->request,
                     $this->container->database,
                     $this->container->registerValidator,
+                    $this->container->loginValidator,
                 );
             if ($content instanceof Response) {
                 $response = $content;

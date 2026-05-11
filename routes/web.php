@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use App\Controller\AboutController;
 use App\Controller\HomeController;
+use App\Controller\LoginController;
 use App\Controller\RegisterController;
 use App\Routing\Route;
 
@@ -13,4 +14,9 @@ return [
 
     Route::get('/register', [RegisterController::class, 'showForm']),
     Route::post('/register', [RegisterController::class, 'register']),
+
+    Route::get('/login', [LoginController::class, 'showForm']),
+    Route::post('/login', [LoginController::class, 'login']),
+
+    Route::post('/logout', [LoginController::class, 'logout'])
 ];

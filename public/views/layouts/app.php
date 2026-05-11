@@ -10,6 +10,10 @@
 </head>
 
 <body class="container">
+    <!-- navbar -->
+    <?php
+    require BASE_DIR . '/public/views/components/header.php';
+    ?>
     <?php
 
     use App\Session\Flash;
@@ -18,10 +22,15 @@
         <div class="alert alert-success">
             <?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?>
         </div>
+    <?php elseif ($message = Flash::get('logout')): ?>
+        <div class="alert alert-success">
+            <?= htmlspecialchars($message, ENT_QUOTES, 'UTF-8') ?>
+        </div>
     <?php endif ?>
-    <?php /** @var string $content */ ?>
+
     <div class="container d-flex justify-content-center align-items-center min-vh-100">
         <div class="w-100" style="max-width: 400px;">
+            <?php /** @var string $content */ ?>
             <?= $content ?>
         </div>
     </div>

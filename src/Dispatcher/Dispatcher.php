@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Dispatcher;
 
+use App\Controller\LoginController;
+use App\Controller\RegisterController;
 use App\Database\Database;
 use App\Request\Request;
 use App\Response\Response;
 use App\Routing\Route;
+use App\Validation\LoginValidator;
 use App\Validation\RegisterValidator;
 use App\View\View;
 use Closure;
@@ -19,17 +22,35 @@ class Dispatcher {
         Request $request,
         Database $database,
         RegisterValidator $registerValidator,
+        LoginValidator $loginValidator,
     ): string|Response {
         if ($route->handler() instanceof Closure) {
             return $route->handler()();
         } else {
             [$handler, $method] = $route->handler();
-            // TODO подумать в дальнейшем над тем как передать $registerValidator только в RegisterController
+
+            if ($handler === RegisterController::class) {
+                $controller = new $handler(
+                    $view,
+                    $request,
+                    $database,
+                    $registerValidator,
+                );
+                return $controller->$method();
+            }
+            if ($handler === LoginController::class) {
+                $controller = new $handler(
+                    $view,
+                    $request,
+                    $database,
+                    $loginValidator,
+                );
+                return $controller->$method();
+            }
             $controller = new $handler(
                 $view,
                 $request,
                 $database,
-                $registerValidator,
             );
             return $controller->$method();
         }

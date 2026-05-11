@@ -8,6 +8,7 @@ use App\Database\Database;
 use App\Dispatcher\Dispatcher;
 use App\Request\Request;
 use App\Routing\Router;
+use App\Validation\LoginValidator;
 use App\Validation\RegisterValidator;
 use App\View\View;
 
@@ -18,6 +19,7 @@ class Container {
     public readonly View $view;
     public readonly Database $database;
     public readonly RegisterValidator $registerValidator;
+    public readonly LoginValidator $loginValidator;
 
     public function __construct() {
         $this->registerServices();
@@ -33,10 +35,13 @@ class Container {
             $routes,
         );
         $this->dispatcher = new Dispatcher();
+
         $this->view = new View();
 
         $this->database = new Database();
 
         $this->registerValidator = new RegisterValidator();
+
+        $this->loginValidator = new LoginValidator();
     }
 }
