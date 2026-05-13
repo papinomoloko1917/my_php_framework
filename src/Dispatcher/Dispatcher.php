@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Dispatcher;
 
-use App\Controller\LoginController;
-use App\Controller\RegisterController;
+use App\Controller\Auth\LoginController;
+use App\Controller\Auth\RegisterController;
 use App\Database\Database;
 use App\Request\Request;
 use App\Response\Response;

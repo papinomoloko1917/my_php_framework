@@ -2,8 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Controller;
+namespace App\Controller\Auth;
 
+use App\Controller\Controller;
 use App\Database\Database;
 use App\Request\Request;
 use App\Response\Response;
@@ -21,7 +22,7 @@ class RegisterController extends Controller {
         parent::__construct($view, $request, $database);
     }
     public function showForm(): string {
-        return $this->view('register');
+        return $this->view('auth/register');
     }
     public function register(): string|Response {
         $rawEmail = $this->request->input('email') ?? '';
@@ -32,7 +33,7 @@ class RegisterController extends Controller {
         $errors = $this->registerValidator->validate($rawEmail, $rawPassword, $passwordConfirmation);
 
         if ($errors) {
-            return $this->view('register', ['errors' => $errors, 'email' => $rawEmail]);
+            return $this->view('auth/register', ['errors' => $errors, 'email' => $rawEmail]);
         }
 
         $email = $rawEmail;
@@ -58,6 +59,6 @@ class RegisterController extends Controller {
             return Response::redirect('/');
         }
         $errors[] = 'Пользователь уже существует';
-        return $this->view('register', ['errors' => $errors, 'email' => $rawEmail]);
+        return $this->view('auth/register', ['errors' => $errors, 'email' => $rawEmail]);
     }
 }
