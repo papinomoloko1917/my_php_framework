@@ -20,14 +20,7 @@ class App {
                 ->resolve();
             $content = $this->container
                 ->dispatcher
-                ->dispatch(
-                    $targetRoute,
-                    $this->container->view,
-                    $this->container->request,
-                    $this->container->database,
-                    $this->container->registerValidator,
-                    $this->container->loginValidator,
-                );
+                ->dispatch($targetRoute);
             if ($content instanceof Response) {
                 $response = $content;
             } else {

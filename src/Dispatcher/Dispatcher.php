@@ -16,14 +16,15 @@ use App\View\View;
 use Closure;
 
 class Dispatcher {
-    public function dispatch(
-        Route $route,
-        View $view,
-        Request $request,
-        Database $database,
-        RegisterValidator $registerValidator,
-        LoginValidator $loginValidator,
-    ): string|Response {
+    public function __construct(
+        private readonly View $view,
+        private readonly Request $request,
+        private readonly Database $database,
+        private readonly RegisterValidator $registerValidator,
+        private readonly LoginValidator $loginValidator,
+    ) {
+    }
+    public function dispatch(Route $route): string|Response {
         if ($route->handler() instanceof Closure) {
             return $route->handler()();
         } else {
@@ -31,26 +32,26 @@ class Dispatcher {
 
             if ($handler === RegisterController::class) {
                 $controller = new $handler(
-                    $view,
-                    $request,
-                    $database,
-                    $registerValidator,
+                    $this->view,
+                    $this->request,
+                    $this->database,
+                    $this->registerValidator,
                 );
                 return $controller->$method();
             }
             if ($handler === LoginController::class) {
                 $controller = new $handler(
-                    $view,
-                    $request,
-                    $database,
-                    $loginValidator,
+                    $this->view,
+                    $this->request,
+                    $this->database,
+                    $this->loginValidator,
                 );
                 return $controller->$method();
             }
             $controller = new $handler(
-                $view,
-                $request,
-                $database,
+                $this->view,
+                $this->request,
+                $this->database,
             );
             return $controller->$method();
         }
