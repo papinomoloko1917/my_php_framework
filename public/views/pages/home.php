@@ -4,13 +4,19 @@
         <li>
             <a href="/about">О нас</a>
         </li>
-        <li>
-            <a href="/register">Регистрация</a>
-        </li>
+        <?php
 
-        <li>
-            <a href="/login">Войти в аккаунт</a>
-        </li>
+        use App\Session\Auth;
+
+        if (!Auth::check()): ?>
+            <li>
+                <a href="/register">Регистрация</a>
+            </li>
+
+            <li>
+                <a href="/login">Войти в аккаунт</a>
+            </li>
+        <?php endif ?>
     </ul>
 
 </div>

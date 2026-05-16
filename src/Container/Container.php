@@ -27,6 +27,8 @@ class Container {
     private function registerServices(): void {
         $routes = require BASE_DIR . '/routes/web.php';
 
+        $this->request = Request::createFromGlobals();
+
         $this->router = new Router(
             $this->request->path(),
             $this->request->method(),
@@ -34,8 +36,6 @@ class Container {
         );
 
         $this->view = new View();
-
-        $this->request = Request::createFromGlobals();
 
         $this->database = new Database();
 

@@ -6,6 +6,8 @@ $pageTitle = $title ?? 'My PHP Framework';
 
 $successMessage = Flash::get('success') ?: Flash::get('logout');
 
+$errorMessage = Flash::get('error');
+
 ?>
 
 <!DOCTYPE html>
@@ -40,7 +42,18 @@ $successMessage = Flash::get('success') ?: Flash::get('logout');
                         data-bs-dismiss="alert"
                         aria-label="Close"></button>
                 </div>
-            <?php endif; ?>
+            <?php endif ?>
+            <?php if ($errorMessage): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?= htmlspecialchars($errorMessage, ENT_QUOTES, 'UTF-8') ?>
+
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert"
+                        aria-label="Close"></button>
+                </div>
+            <?php endif ?>
 
             <?php /** @var string $content */ ?>
             <?= $content ?>

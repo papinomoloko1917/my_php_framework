@@ -6,6 +6,7 @@ use App\Controller\AboutController;
 use App\Controller\HomeController;
 use App\Controller\Auth\LoginController;
 use App\Controller\Auth\RegisterController;
+use App\Controller\Authorized\ProfileController;
 use App\Routing\Route;
 
 return [
@@ -18,5 +19,7 @@ return [
     Route::get('/login', [LoginController::class, 'showForm']),
     Route::post('/login', [LoginController::class, 'login']),
 
-    Route::post('/logout', [LoginController::class, 'logout'])
+    Route::post('/logout', [LoginController::class, 'logout']),
+
+    Route::get('/profile', [ProfileController::class, 'index'])
 ];

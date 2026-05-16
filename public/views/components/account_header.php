@@ -9,7 +9,7 @@ if (Auth::check()): ?>
                 <?= htmlspecialchars(Auth::email(), ENT_QUOTES, 'UTF-8') ?>
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Личный кабинет</a></li>
+                <li><a class="dropdown-item" href="/profile">Личный кабинет</a></li>
                 <li><a class="dropdown-item" href="#">Настройки</a></li>
                 <li>
                     <hr class="dropdown-divider">
