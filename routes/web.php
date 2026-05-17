@@ -22,4 +22,5 @@ return [
     Route::post('/logout', [LoginController::class, 'logout']),
 
     Route::get('/profile', [ProfileController::class, 'index'])
+        ->middleware(['auth']),
 ];

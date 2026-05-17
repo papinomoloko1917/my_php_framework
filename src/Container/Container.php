@@ -6,6 +6,9 @@ namespace App\Container;
 
 use App\Database\Database;
 use App\Dispatcher\Dispatcher;
+use App\Exception\ExceptionHandler;
+use App\Factory\ControllerFactory;
+use App\Middleware\Resolver\MiddlewareResolver;
 use App\Request\Request;
 use App\Routing\Router;
 use App\Validation\LoginValidator;
@@ -20,6 +23,9 @@ class Container {
     public readonly Database $database;
     public readonly RegisterValidator $registerValidator;
     public readonly LoginValidator $loginValidator;
+    public readonly ControllerFactory $controllerFactory;
+    public readonly ExceptionHandler $exceptionHandler;
+    public readonly MiddlewareResolver $middlewareResolver;
 
     public function __construct() {
         $this->registerServices();
@@ -37,18 +43,27 @@ class Container {
 
         $this->view = new View();
 
+        $this->exceptionHandler = new ExceptionHandler($this->view);
+
         $this->database = new Database();
 
         $this->registerValidator = new RegisterValidator();
 
         $this->loginValidator = new LoginValidator();
 
-        $this->dispatcher = new Dispatcher(
+        $this->controllerFactory = new ControllerFactory(
             $this->view,
             $this->request,
             $this->database,
             $this->registerValidator,
             $this->loginValidator,
+        );
+
+        $this->middlewareResolver = new MiddlewareResolver();
+
+        $this->dispatcher = new Dispatcher(
+            $this->controllerFactory,
+            $this->middlewareResolver
         );
     }
 }

@@ -20,4 +20,13 @@ class View {
 
         return $layout;
     }
+    public function error(int $statusCode): string {
+        ob_start();
+        require BASE_DIR . "/public/views/errors/$statusCode.php";
+        $content = ob_get_clean();
+
+        ob_start();
+        require BASE_DIR . "/public/views/layouts/cleanTemplate.php";
+        return ob_get_clean();
+    }
 }

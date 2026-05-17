@@ -11,6 +11,7 @@ class Route {
         private string $path,
         private string $method,
         private Closure|array $handler,
+        private array $middleware = [],
     ) {
     }
     public static function get(string $path, Closure|array $handler): self {
@@ -27,5 +28,12 @@ class Route {
     }
     public function handler(): Closure|array {
         return $this->handler;
+    }
+    public function middleware(array $middleware): self {
+        $this->middleware = $middleware;
+        return $this;
+    }
+    public function middlewareList(): array {
+        return $this->middleware;
     }
 }

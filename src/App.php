@@ -27,11 +27,9 @@ class App {
                 $response = Response::html($content);
             }
         } catch (Throwable $e) {
-            if ($e->getCode() >= 100 && $e->getCode() <= 599) {
-                $response = Response::html($e->getMessage(), $e->getCode());
-            } else {
-                $response = Response::html($e->getMessage(), 500);
-            }
+            $response = $this->container
+                ->exceptionHandler
+                ->handle($e);
         }
         $response->send();
     }
