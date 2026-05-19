@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Middleware\Resolver;
 
 use App\Middleware\AuthMiddleware;
+use App\Middleware\GuestMiddleware;
 use App\Middleware\MiddlewareInterface;
 use App\Response\Response;
 use RuntimeException;
@@ -12,6 +13,7 @@ use RuntimeException;
 class MiddlewareResolver {
     private array $middlewareAliases = [
         'auth' => AuthMiddleware::class,
+        'guest' => GuestMiddleware::class,
     ];
     public function run(array $middlewareList): ?Response {
         foreach ($middlewareList as $middleware) {

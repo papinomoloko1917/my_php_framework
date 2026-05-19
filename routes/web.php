@@ -13,10 +13,12 @@ return [
     Route::get('/', [HomeController::class, 'index']),
     Route::get('/about', [AboutController::class, 'index']),
 
-    Route::get('/register', [RegisterController::class, 'showForm']),
+    Route::get('/register', [RegisterController::class, 'showForm'])
+        ->middleware(['guest']),
     Route::post('/register', [RegisterController::class, 'register']),
 
-    Route::get('/login', [LoginController::class, 'showForm']),
+    Route::get('/login', [LoginController::class, 'showForm'])
+        ->middleware(['guest']),
     Route::post('/login', [LoginController::class, 'login']),
 
     Route::post('/logout', [LoginController::class, 'logout']),
